@@ -3,6 +3,8 @@
 # playbook for node1.
 # ロールをincludeするだけ。
 - hosts: node1
+  gather_facts: False # リモートの情報を取得しない
   roles:
     - common
+    - python27
     - node1

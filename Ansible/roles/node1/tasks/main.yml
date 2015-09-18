@@ -1,2 +1,9 @@
 ---
 # file: roles/node1/tasks/main.yml
+- name: add node2 at /etc/hosts
+  sudo: yes
+  lineinfile: >-
+    dest=/etc/hosts
+    line='192.168.33.12  node2'
+    backup=yes
+  tags: node1

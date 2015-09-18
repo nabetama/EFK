@@ -1,0 +1,14 @@
+---
+# roles/python27/tasks/main.yml
+- name: be sure zlib-devel, bzip2-devel, openssl-devel, ncurses-devel, sqlite-devel, tk-devel are installed
+  sudo: yes
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - zlib-devel
+    - bzip2-devel
+    - openssl-devel
+    - ncurses-devel
+    - sqlite-devel
+    - readline-devel
+    - tk-devel
+  tags: python
