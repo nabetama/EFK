@@ -39,4 +39,10 @@
   with_items: elastic_search_tar
   tags: elasticsearch
 
-# TODO: 設定ファイル書き込む
+- name: Add init script /etc/init.d/elasticsearch
+  sudo: yes
+  copy: >
+    src={{ elasticsearch_init_script_src }}
+    dest={{ elasticsearch_init_script_dest }}
+    mode=0755
+  tags: test

@@ -6,3 +6,5 @@ elastic_search_tar:
 elasticsearch_download_base_url: "https://download.elastic.co/elasticsearch/elasticsearch"
 elasticsearch_download_dest_dir: /usr/local/src
 elastic_search_dir: /opt
+elasticsearch_init_script_src: etc/init.d/elasticsearch
+elasticsearch_init_script_dest: /etc/init.d/elasticsearch
