@@ -4,3 +4,4 @@
 - include: elasticsearchservers.yml
 - include: fluentdservers.yml
 - include: kibanaservers.yml
+- include: node1.yml

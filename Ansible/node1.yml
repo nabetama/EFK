@@ -1,0 +1,8 @@
+---
+# file: node1.yml
+# playbook for node1.
+# ロールをincludeするだけ。
+- hosts: node1
+  roles:
+    - common
+    - node1
