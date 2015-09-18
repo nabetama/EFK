@@ -1,0 +1,15 @@
+---
+# roles/common/tasks/main.yml
+- name: be sure vim, tig, git, unzip are installed
+  sudo: yes
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - curl
+    - git
+    - libselinux-python
+    - vim
+    - tig
+    - unzip
+    - wget
+    - tmux
+  tags: common

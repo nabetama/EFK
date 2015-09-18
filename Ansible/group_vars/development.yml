@@ -1,0 +1,8 @@
+---
+# file: group_vars/development.yml
+elastic_search_tar: 
+  - tarball: elasticsearch-1.7.2.tar.gz
+    filename: elasticsearch-1.7.2
+elasticsearch_download_base_url: "https://download.elastic.co/elasticsearch/elasticsearch"
+elasticsearch_download_dest_dir: /usr/local/src
+elastic_search_dir: /opt

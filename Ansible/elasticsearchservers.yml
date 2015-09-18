@@ -1,0 +1,8 @@
+---
+# file: elasticsearchservers.yml
+# playbook for elasticsearch.
+# ロールをincludeするだけ。
+- hosts: elasticsearchservers
+  roles:
+    - common
+    - elasticsearch

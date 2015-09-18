@@ -1,0 +1,7 @@
+---
+# file: fluentdservers.yml
+# playbook for fluentd.
+# ロールをincludeするだけ。
+- hosts: fluentdservers
+  roles:
+    - common

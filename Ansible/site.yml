@@ -1,0 +1,6 @@
+---
+# file: site.yml
+# master playbook.
+- include: elasticsearchservers.yml
+- include: fluentdservers.yml
+- include: kibanaservers.yml

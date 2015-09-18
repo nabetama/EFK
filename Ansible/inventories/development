@@ -1,0 +1,14 @@
+; file inventories/development
+[elasticsearchservers]
+192.168.33.12
+
+[fluentdservers]
+192.168.33.12
+
+[kibanaservers]
+192.168.33.12
+
+[development:children]
+elasticsearchservers
+fluentdservers
+kibanaservers

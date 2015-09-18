@@ -1,0 +1,42 @@
+---
+# file roles/elasticsearch/tasks/main.yml
+- name: be sure Java1.7 openjdk installed.
+  sudo: yes
+  yum: name=java-1.7.0-openjdk state=latest
+  tags: elasticsearch
+
+- name: check elasticsearch_download_dest_dir.
+  sudo: yes
+  file: path={{elasticsearch_download_dest_dir}} state=directory
+  tags: elasticsearch
+
+- name: download ElasticSearch 1.7.2 tarball.
+  sudo: yes
+  get_url: >
+      url={{elasticsearch_download_base_url}}/{{item.tarball}}
+      dest={{elasticsearch_download_dest_dir}}/{{item.tarball}}
+  with_items: elastic_search_tar
+  tags: elasticsearch
+
+- name: unarchive elastic search
+  sudo: yes
+  unarchive: >
+        src={{elasticsearch_download_dest_dir}}/{{item.tarball}}
+        dest={{elastic_search_dir}}
+        creates=no
+        copy=no
+  with_items: elastic_search_tar
+  tags: elasticsearch
+
+- name: Create symlink /opt/elasticsearch -> elasticsearch-1.7.2
+  sudo: yes
+  file: >
+        src={{elastic_search_dir}}/{{item.filename}}
+        dest={{elastic_search_dir}}/elasticsearch
+        state=link
+        mode=0755
+        force=yes
+  with_items: elastic_search_tar
+  tags: elasticsearch
+
+# TODO: 設定ファイル書き込む

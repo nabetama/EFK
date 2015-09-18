@@ -1,0 +1,7 @@
+---
+# file: kibanaservers.yml
+# playbook for kibana.
+# ロールをincludeするだけ。
+- hosts: kibanaservers
+  roles:
+    - common
