@@ -11,4 +11,8 @@
     - sqlite-devel
     - readline-devel
     - tk-devel
-  tags: python
+    - expat-devel
+    - tcl-devel
+    - gdbm-devel
+    - libbsd-devel
+  tags: python27
