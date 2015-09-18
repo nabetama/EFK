@@ -1,0 +1,7 @@
+---
+# file group_vars/python27.yml
+python27:
+  - tarball: Python-2.7.8.tgz
+    filename: Python-2.7.8
+python27_download_dir: /usr/local/src
+python27_download_base_url: https://www.python.org/ftp/python/2.7.8

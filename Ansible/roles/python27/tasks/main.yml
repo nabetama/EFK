@@ -16,3 +16,12 @@
     - gdbm-devel
     - libbsd-devel
   tags: python27
+
+- name: download python2.7.8.
+  sudo: yes
+  get_url: >
+      url={{python27_download_base_url}}/{{item.tarball}}
+      dest={{python27_download_dir}}/{{item.tarball}}
+  with_items: python27
+  tags: python27
+
