@@ -7,3 +7,14 @@
     line='192.168.33.12  node2'
     backup=yes
   tags: node1
+
+- name: unarchive python27.
+  sudo: yes
+  unarchive: >
+        src={{python27_download_dir}}/{{item.tarball}}
+        dest={{python27_download_dir}}/
+        creates=no
+        copy=no
+  with_items: python27
+  tags: python27
+
