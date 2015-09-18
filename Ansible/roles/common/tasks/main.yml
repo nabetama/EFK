@@ -12,4 +12,5 @@
     - unzip
     - wget
     - tmux
+    - openssl-devel
   tags: common
