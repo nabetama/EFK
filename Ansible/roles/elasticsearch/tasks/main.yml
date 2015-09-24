@@ -47,7 +47,7 @@
 
 - name: Add init script /etc/init.d/elasticsearch
   sudo: yes
-  copy: >
+  template: >
     src={{ item.init_script_src }}
     dest={{ item.init_script_dest }}
     mode=0755
