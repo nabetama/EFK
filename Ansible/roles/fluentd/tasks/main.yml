@@ -1,0 +1,27 @@
+---
+# file: roles/fluentd/tasks/main.yml
+# See: http://docs.fluentd.org/articles/install-by-rpm
+- name: install ntp, libcurl-devel
+  sudo: yes
+  yum: pkg={{ item }} state=installed
+  tags: fluentd
+  with_items:
+    - ntp
+    - libcurl-devel
+
+- name: download install script.
+  sudo: yes
+  get_url: >
+      url={{ item.install_script_url }}
+      dest={{ item.download_dest_dir }}
+  with_items:
+    fluentd
+  tags: fluentd
+
+- name: install fluentd.
+  sudo: yes
+  command:
+    sh {{ item.download_dest_dir }}/{{ item.install_script }}
+  with_items:
+    fluentd
+  tags: fluentd

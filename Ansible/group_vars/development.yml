@@ -21,3 +21,8 @@ kibana:
     init_script_dest: /etc/init.d/kibana
     log_dir: /var/log/kibana
     log_file: kibana.log
+
+fluentd:
+  - install_script_url: https://toolbelt.treasuredata.com/sh/install-redhat-td-agent2.sh
+    download_dest_dir: /usr/local/src
+    install_script: install-redhat-td-agent2.sh
