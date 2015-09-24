@@ -45,3 +45,21 @@
   with_items:
     python27
   tags: python27
+
+- name: download pip install script
+  sudo: yes
+  command: >
+    curl -LO https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+    chdir={{ item.download_dir }}
+  with_items:
+    pip
+  tags: python27
+
+- name: install pip
+  sudo: yes
+  command: >
+    python {{ item.install_script }}
+    chdir={{ item.download_dir }}
+  with_items:
+    pip
+  tags: python27
