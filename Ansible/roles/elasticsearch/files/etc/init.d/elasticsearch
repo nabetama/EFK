@@ -40,7 +40,7 @@ pidfile=/var/run/elasticsearch/${prog}.pid
 USER=root
 ES_USER=root
 MAX_OPEN_FILES=65000
-export ES_HEAP_SIZE=40g
+export ES_HEAP_SIZE=1g
 export ES_HEAP_NEWSIZE
 export ES_DIRECT_SIZE
 export ES_JAVA_OPTS="-Xms40g -Xmx40g -XX:NewRatio=3"

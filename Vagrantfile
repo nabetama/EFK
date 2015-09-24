@@ -12,6 +12,7 @@ Vagrant.configure(2) do |config|
     node.vm.network :forwarded_port, guest: 22, host: 2002, id: "ssh"
     node.vm.network :forwarded_port, guest: 80, host: 8000, id: "http"
     node.vm.network :forwarded_port, guest: 9200, host: 9200, id: "elasticsearch"
+    node.vm.network :forwarded_port, guest: 5601, host: 5601, id: "kibana"
     node.vm.network :private_network, ip: "192.168.33.12"
   end
 end

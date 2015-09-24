@@ -5,44 +5,52 @@
   yum: name=java-1.7.0-openjdk state=latest
   tags: elasticsearch
 
-- name: check elasticsearch_download_dest_dir.
+- name: check {{ item.download_dest_dir }}.
   sudo: yes
-  file: path={{elasticsearch_download_dest_dir}} state=directory
+  file: path={{ item.download_dest_dir }} state=directory
   tags: elasticsearch
+  with_items:
+    elastic_search
 
 - name: download ElasticSearch 1.7.2 tarball.
   sudo: yes
   get_url: >
-      url={{elasticsearch_download_base_url}}/{{item.tarball}}
-      dest={{elasticsearch_download_dest_dir}}/{{item.tarball}}
+      url={{ item.download_base_url }}/{{ item.tarball }}
+      dest={{ item.download_dest_dir }}/{{ item.tarball }}
   with_items: elastic_search_tar
   tags: elasticsearch
+  with_items:
+    elastic_search
 
 - name: unarchive elastic search
   sudo: yes
   unarchive: >
-        src={{elasticsearch_download_dest_dir}}/{{item.tarball}}
-        dest={{elastic_search_dir}}
+        src={{item.download_dest_dir }}/{{ item.tarball }}
+        dest={{ item.dir}}
         creates=no
         copy=no
-  with_items: elastic_search_tar
+  with_items:
+    elastic_search
   tags: elasticsearch
 
 - name: Create symlink /opt/elasticsearch -> elasticsearch-1.7.2
   sudo: yes
   file: >
-        src={{elastic_search_dir}}/{{item.filename}}
-        dest={{elastic_search_dir}}/elasticsearch
+        src={{ item.dir }}/{{item.filename}}
+        dest={{ item.dir }}/elasticsearch
         state=link
         mode=0755
         force=yes
-  with_items: elastic_search_tar
+  with_items:
+    elastic_search
   tags: elasticsearch
 
 - name: Add init script /etc/init.d/elasticsearch
   sudo: yes
   copy: >
-    src={{ elasticsearch_init_script_src }}
-    dest={{ elasticsearch_init_script_dest }}
+    src={{ item.init_script_src }}
+    dest={{ item.init_script_dest }}
     mode=0755
-  tags: test
+  with_items:
+    elastic_search
+  tags: elasticsearch

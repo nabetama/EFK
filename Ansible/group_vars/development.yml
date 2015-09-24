@@ -1,10 +1,21 @@
 ---
 # file: group_vars/development.yml
-elastic_search_tar: 
+elastic_search: 
   - tarball: elasticsearch-1.7.2.tar.gz
     filename: elasticsearch-1.7.2
-elasticsearch_download_base_url: "https://download.elastic.co/elasticsearch/elasticsearch"
-elasticsearch_download_dest_dir: /usr/local/src
-elastic_search_dir: /opt
-elasticsearch_init_script_src: etc/init.d/elasticsearch
-elasticsearch_init_script_dest: /etc/init.d/elasticsearch
+    download_base_url: "https://download.elastic.co/elasticsearch/elasticsearch"
+    download_dest_dir: /usr/local/src
+    dir: /opt
+    init_script_src: etc/init.d/elasticsearch
+    init_script_dest: /etc/init.d/elasticsearch
+
+kibana:
+  - tarball: kibana-4.1.2-linux-x64.tar.gz
+    filename: kibana-4.1.2-linux-x64
+    download_base_url: "https://download.elastic.co/kibana/kibana"
+    download_dest_dir: /usr/local/src
+    dir: /opt
+    init_script_src: etc/init.d/kibana
+    init_script_dest: /etc/init.d/kibana
+    log_dir: /var/log/kibana
+    log_file: kibana.log
