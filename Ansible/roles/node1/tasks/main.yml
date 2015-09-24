@@ -11,8 +11,8 @@
 - name: unarchive python27.
   sudo: yes
   unarchive: >
-        src={{ python27_download_dir }}/{{ item.tarball }}
-        dest={{ python27_download_dir }}/
+        src={{ item.download_dir }}/{{ item.tarball }}
+        dest={{ item.download_dir }}/
         creates=no
         copy=no
   with_items: python27
@@ -22,8 +22,8 @@
   sudo: yes
   command: >
     ./configure
-    --prefix={{ python27_install_dir }}
-    chdir={{ python27_download_dir }}/{{ item.item_dir }}
+    --prefix={{ item.install_dir }}
+    chdir={{ item.download_dir }}/{{ item.item_dir }}
   with_items:
     python27
   tags: python27
@@ -32,7 +32,7 @@
   sudo: yes
   command: >
     make
-    chdir={{ python27_download_dir }}/{{ item.item_dir }}
+    chdir={{ item.download_dir }}/{{ item.item_dir }}
   with_items:
     python27
   tags: python27
@@ -41,7 +41,7 @@
   sudo: yes
   command: >
     make install
-    chdir={{ python27_download_dir }}/{{ item.item_dir }}
+    chdir={{ item.download_dir }}/{{ item.item_dir }}
   with_items:
     python27
   tags: python27
