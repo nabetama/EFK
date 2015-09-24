@@ -37,7 +37,7 @@
   sudo: yes
   file: >
         src={{ item.dir }}/{{item.filename}}
-        dest={{ elastic_search_dir }}/elasticsearch
+        dest={{ item.dir }}/elasticsearch
         state=link
         mode=0755
         force=yes
