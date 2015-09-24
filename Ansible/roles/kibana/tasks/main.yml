@@ -8,3 +8,46 @@
   with_items:
     kibana
   tags: kibana
+
+- name: unarchive kibana
+  sudo: yes
+  unarchive: >
+        src={{item.download_dest_dir }}/{{ item.tarball }}
+        dest={{ item.dir}}
+        creates=no
+        copy=no
+  with_items:
+    kibana
+  tags: kibana
+
+- name: Create symlink /opt/kibana -> kibana-4.1.2-linux-x64
+  sudo: yes
+  file: >
+        src={{ item.dir }}/{{item.filename}}
+        dest={{ item.dir }}/kibana
+        state=link
+        mode=0755
+        force=yes
+  with_items:
+    kibana
+  tags: kibana
+
+- name: Create kibana log.
+  sudo: yes
+  file: >
+    path={{ item.log_dir }}
+    state=directory
+    mode=0755
+    owner=root
+    group=root
+  with_items:
+    kibana
+  tags: kibana
+
+- name: Run Kibana
+  sudo: yes
+  command: >
+    sudo /opt/kibana/bin/kibana >> {{ item.log_dir }}/{{ item.log_file }} &
+  with_items:
+    kibana
+  tags: kibana
