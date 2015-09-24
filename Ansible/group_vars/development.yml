@@ -6,8 +6,10 @@ elastic_search:
     download_base_url: "https://download.elastic.co/elasticsearch/elasticsearch"
     download_dest_dir: /usr/local/src
     dir: /opt
-    init_script_src: etc/init.d/elasticsearch
+    init_script_src: etc/init.d/elasticsearch.j2
     init_script_dest: /etc/init.d/elasticsearch
+es_heap_size: "1g"
+es_java_opts: "-Xms512m -Xmx512m -XX:NewRatio=3"
 
 kibana:
   - tarball: kibana-4.1.2-linux-x64.tar.gz
