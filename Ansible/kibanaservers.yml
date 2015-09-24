@@ -3,5 +3,7 @@
 # playbook for kibana.
 # ロールをincludeするだけ。
 - hosts: kibanaservers
+  gather_facts: False # リモートの情報を取得しない
   roles:
     - common
+    - kibana

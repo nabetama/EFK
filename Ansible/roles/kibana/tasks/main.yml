@@ -1,0 +1,10 @@
+---
+# file: roles/kibana/tasks/main.yml
+- name: download Kibana 4.1.2 tarball.
+  sudo: yes
+  get_url: >
+      url={{ item.download_base_url}}/{{item.tarball}}
+      dest={{ item.download_dest_dir}}/{{item.tarball}}
+  with_items:
+    kibana
+  tags: kibana

@@ -8,3 +8,12 @@ elastic_search:
     dir: /opt
     init_script_src: etc/init.d/elasticsearch
     init_script_dest: /etc/init.d/elasticsearch
+
+kibana:
+  - tarball: kibana-4.1.2-linux-x64.tar.gz
+    filename: kibana-4.1.2
+    download_base_url: "https://download.elastic.co/kibana/kibana"
+    download_dest_dir: /usr/local/src
+    dir: /opt
+    init_script_src: etc/init.d/kibana
+    init_script_dest: /etc/init.d/kibana
