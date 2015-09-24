@@ -53,4 +53,4 @@
     mode=0755
   with_items:
     elastic_search
-  tags: test
+  tags: elasticsearch
