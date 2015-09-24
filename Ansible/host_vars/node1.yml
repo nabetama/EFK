@@ -1,0 +1,16 @@
+---
+# file group_vars/python27.yml
+python27:
+  - tarball: Python-2.7.8.tgz
+    item_dir: Python-2.7.8
+    download_dir: /usr/local/src
+    download_base_url: https://www.python.org/ftp/python/2.7.8
+    dest_dir: /usr/local
+    install_dir: /usr/local
+
+pip:
+  - install_script: get-pip.py
+    download_dir: /usr/local/src
+
+ansible:
+  - version: 1.9.2

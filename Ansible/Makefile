@@ -7,7 +7,7 @@ OPT=-cropgtv --cvs-exclude --delete $(EXCLUDE)
 LOCAL_PATH=.
 REMOTE_USER=vagrant
 REMOTE_HOST=node1
-REMOTE_PATH=/home/vagrant
+REMOTE_PATH=/home/vagrant/Ansible
 
 default:
 	@echo "Usage:"
