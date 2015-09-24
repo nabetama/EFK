@@ -11,3 +11,6 @@ python27_install_dir: /usr/local
 pip:
   - install_script: get-pip.py
     download_dir: /usr/local/src
+
+ansible:
+  - version: 1.9.2

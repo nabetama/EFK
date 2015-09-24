@@ -53,7 +53,7 @@
     chdir={{ item.download_dir }}
   with_items:
     pip
-  tags: python27
+  tags: pip
 
 - name: install pip
   sudo: yes
@@ -62,4 +62,12 @@
     chdir={{ item.download_dir }}
   with_items:
     pip
-  tags: python27
+  tags: pip
+
+- name: install ansible
+  sudo: yes
+  command: >
+    yum install ansible-{{ item.version }}
+  with_items:
+    ansible
+  tags: ansible
