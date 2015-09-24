@@ -3,6 +3,7 @@
 # playbook for elasticsearch.
 # ロールをincludeするだけ。
 - hosts: elasticsearchservers
+  gather_facts: False # リモートの情報を取得しない
   roles:
     - common
     - elasticsearch
