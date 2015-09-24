@@ -1,7 +1,9 @@
 ---
 # file: fluentdservers.yml
-# playbook for fluentd.
+# playbook for fluentdservers.
 # ロールをincludeするだけ。
 - hosts: fluentdservers
+  gather_facts: False # リモートの情報を取得しない
   roles:
     - common
+    - fluentd
