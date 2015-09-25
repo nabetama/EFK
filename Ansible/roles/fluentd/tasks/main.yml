@@ -41,7 +41,7 @@
 - name: create pos_file.
   sudo: yes
   file: >
-    path={{ pos_file_dir }}/{{ item.nginx_pos_file }}
+    path={{ item.pos_file_dir }}/{{ item.nginx_pos_file }}
     state=file
     owner=td-agent
     group=td-agent
@@ -53,7 +53,7 @@
   sudo: yes
   template: >
     src={{ item.conf_src }}
-    src={{ item.conf_dest }}
+    dest={{ item.conf_dest }}
   with_items:
     fluentd
   tags: fluentd
