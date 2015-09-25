@@ -1,0 +1,31 @@
+---
+# file roles/nginx/tasks/main.yml
+- name: Add latest RPM.
+  sudo: yes
+  yum: >
+    name={{ nginx.rpm }}
+    state=present
+  tags: nginx
+
+- name: Install nginx.
+  sudo: yes
+  yum: name=nginx-{{ nginx.version }} state=latest
+  tags: nginx
+
+- name: put nginx.conf.
+  sudo: yes
+  template: >
+    src={{ nginx.conf_src }}
+    dest={{ nginx.conf_dest }}
+    backup=yes
+  tags: nginx
+
+- name: put conf.d/default.conf
+  sudo: yes
+  template: >
+    src={{ nginx.confd_src }}
+    dest={{ nginx.confd_dest }}
+    backup=yes
+  notify:
+    - force restart nginx
+  tags: nginx

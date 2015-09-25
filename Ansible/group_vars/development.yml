@@ -26,3 +26,11 @@ fluentd:
   - install_script_url: https://toolbelt.treasuredata.com/sh/install-redhat-td-agent2.sh
     download_dest_dir: /usr/local/src
     install_script: install-redhat-td-agent2.sh
+
+nginx:
+  rpm: http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+  version: 1.8.0
+  conf_src: nginx.conf.j2
+  conf_dest: /etc/nginx/nginx.conf
+  confd_src: conf.d/default.conf.j2
+  confd_dest: /etc/nginx/conf.d/default.conf
