@@ -1,0 +1,9 @@
+---
+# file: nginx.yml
+# playbook for nginx.
+# ロールをincludeするだけ。
+- hosts: nginxservers
+  gather_facts: False # リモートの情報を取得しない
+  roles:
+    - common
+    - nginx

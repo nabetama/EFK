@@ -8,6 +8,9 @@
 [kibanaservers]
 192.168.33.12
 
+[nginxservers]
+192.168.33.12
+
 [development:children]
 elasticsearchservers
 fluentdservers

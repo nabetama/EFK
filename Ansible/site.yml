@@ -1,7 +1,8 @@
 ---
 # file: site.yml
 # master playbook.
+- include: node1.yml
 - include: elasticsearchservers.yml
 - include: fluentdservers.yml
 - include: kibanaservers.yml
-- include: node1.yml
+- include: nginxservers.yml
