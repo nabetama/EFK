@@ -48,9 +48,9 @@
 
 - name: download pip install script
   sudo: yes
-  command: >
-    curl -LO https://raw.github.com/pypa/pip/master/contrib/get-pip.py
-    chdir={{ item.download_dir }}
+  get_url: >
+    url=https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+    dest={{ item.download_dir }}
   with_items:
     pip
   tags: pip
