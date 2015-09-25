@@ -25,3 +25,35 @@
   with_items:
     fluentd
   tags: fluentd
+
+- name: mkdir /var/lib/fluent
+  sudo: yes
+  file: >
+    path={{ item.pos_file_dir }}
+    state=directory
+    owner=td-agent
+    group=td-agent
+    mode=0755
+  with_items:
+    fluentd
+  tags: fluentd
+
+- name: create pos_file.
+  sudo: yes
+  file: >
+    path={{ pos_file_dir }}/{{ item.nginx_pos_file }}
+    state=file
+    owner=td-agent
+    group=td-agent
+  with_items:
+    fluentd
+  tags: fluentd
+
+- name: put td-agent.conf.
+  sudo: yes
+  template: >
+    src={{ item.conf_src }}
+    src={{ item.conf_dest }}
+  with_items:
+    fluentd
+  tags: fluentd
