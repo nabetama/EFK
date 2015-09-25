@@ -66,8 +66,7 @@
 
 - name: install ansible
   sudo: yes
-  command: >
-    yum install ansible-{{ item.version }}
+  yum: pkg=ansible-{{ item.version }} state=installed
   with_items:
     ansible
   tags: ansible
