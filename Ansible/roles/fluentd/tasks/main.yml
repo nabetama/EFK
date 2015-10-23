@@ -39,11 +39,35 @@
     dest: /etc/sysctl.conf
     line: "{{ item.line }}"
   with_items:
+    - { line: "# fluentd settings." }
     - { line: "net.ipv4.tcp_tw_recycle = 1" }
     - { line: "net.ipv4.tcp_tw_reuse = 1" }
     - { line: "net.ipv4.ip_local_port_range = 10240    65535" }
+  register: changed_kernel_parameters
   tags: fluentd
 
+- name: reboot OS
+  sudo: yes
+  command: shutdown -r now
+  when: changed_kernel_parameters.changed == True
+  tags: fluentd
+
+- name: wait for SSH port down
+  local_action: wait_for host={{ inventory_hostname }} port=22 state=stopped
+  when: changed_kernel_parameters.changed == True
+  register: wait_for_SSH_port_down
+  tags: fluentd
+
+- name: wait for SSH port up
+  local_action: wait_for host={{ inventory_hostname }} port=22 delay=30
+  when: changed_kernel_parameters.changed == True
+  tags: fluentd
+
+- name: test connection
+  ping:
+  tags: fluentd
+
+# 
 # - name: download install script.
 #   sudo: yes
 #   get_url: >
