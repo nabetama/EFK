@@ -52,6 +52,14 @@
     mode=0755
   with_items:
     kibana
-  notify:
-    - force restart kibana
+  tags: kibana
+
+- name: chkconfig on
+  sudo: yes
+  command: chkconfig --add kibana
+  tags: kibana
+
+- name: restart kibana
+  sudo: yes
+  service: name=kibana state=restarted enabled=yes
   tags: kibana
