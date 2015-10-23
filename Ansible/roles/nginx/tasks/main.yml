@@ -26,6 +26,14 @@
     src={{ nginx.confd_src }}
     dest={{ nginx.confd_dest }}
     backup=yes
-  notify:
-    - force restart nginx
+  tags: nginx
+
+- name: chkconig --add nginx
+  sudo: yes
+  command: chkconfig --add nginx
+  tags: nginx
+
+- name: restart nginx
+  sudo: yes
+  service: name=nginx state=restarted enabled=yes
   tags: nginx
