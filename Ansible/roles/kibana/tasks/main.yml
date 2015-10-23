@@ -52,12 +52,6 @@
     mode=0755
   with_items:
     kibana
-  tags: kibana
-
-- name: Run Kibana
-  sudo: yes
-  command: >
-    sudo {{ item.init_script_dest }} start
-  with_items:
-    kibana
+  notify:
+    - force restart kibana
   tags: kibana

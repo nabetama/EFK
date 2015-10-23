@@ -1,0 +1,5 @@
+---
+# file: roles/kibana/handlers/main.yml
+- name: force restart kibana
+  sudo: yes
+  service: name=kibana state=restarted
