@@ -44,10 +44,20 @@
     kibana
   tags: kibana
 
+- name: place on init.d script.
+  sudo: yes
+  file: >
+    src={{ item.init_script_src }}
+    dest={{ item.init_script_dest }}
+    mode=0755
+  with_items:
+    kibana
+  tags: kibana
+
 - name: Run Kibana
   sudo: yes
   command: >
-    sudo /opt/kibana/bin/kibana >> {{ item.log_dir }}/{{ item.log_file }} &
+    sudo {{ item.init_script_dest }} start
   with_items:
     kibana
   tags: kibana
