@@ -54,3 +54,13 @@
   with_items:
     elastic_search
   tags: elasticsearch
+
+- name: chkconfig on
+  sudo: yes
+  command: chkconfig --add elasticsearch
+  tags: elasticsearch
+
+- name: restart elasticsearch
+  sudo: yes
+  service: name=elasticsearch state=restarted enabled=yes
+  tags: elasticsearch
