@@ -32,7 +32,7 @@
     kibana
   tags: kibana
 
-- name: Create kibana log.
+- name: Create log file.
   sudo: yes
   file: >
     path={{ item.log_dir }}
