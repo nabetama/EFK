@@ -46,7 +46,7 @@
 
 - name: place on init.d script.
   sudo: yes
-  file: >
+  template: >
     src={{ item.init_script_src }}
     dest={{ item.init_script_dest }}
     mode=0755
