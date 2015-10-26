@@ -30,6 +30,10 @@ fluentd:
     nginx_pos_file: nginx-access.log.pos
     conf_src: etc/td-agent/td-agent.conf
     conf_dest: /etc/td-agent/td-agent.conf
+    ruby_source_url: http://cache.ruby-lang.org/pub/ruby/2.1
+    ruby_source_tarball: ruby-2.1.5.tar.gz
+    ruby_install_prefix: /usr/local/ruby
+    ruby_dir_with_version: ruby-2.1.5
 
 nginx:
   rpm: http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm

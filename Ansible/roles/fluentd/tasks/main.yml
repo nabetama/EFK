@@ -1,6 +1,59 @@
 ---
 # file: roles/fluentd/tasks/main.yml
 # See: http://docs.fluentd.org/articles/install-by-rpm
+- name: download ruby
+  sudo: yes
+  get_url: >
+    url={{ item.ruby_source_url }}/{{ item.ruby_source_tarball }}
+    dest={{ item.download_dest_dir }}
+  with_items:
+    fluentd
+  tags: fluentd
+
+- name: unarchive ruby
+  sudo: yes
+  unarchive: >
+    src={{ item.download_dest_dir }}/{{ item.ruby_source_tarball }}
+    dest={{ item.download_dest_dir }}
+    creates=no
+    copy=no
+  with_items: fluentd
+  tags: fluentd
+
+- name: configure ruby
+  sudo: yes
+  command: >
+    ./configure --prefix={{ item.ruby_install_prefix }}
+    chdir={{ item.download_dest_dir }}/{{ item.ruby_dir_with_version }}
+  with_items: fluentd
+  tags: fluentd
+
+- name: make ruby
+  sudo: yes
+  command: >
+    make
+    chdir={{ item.download_dest_dir }}/{{ item.ruby_dir_with_version }}
+  with_items: fluentd
+  tags: fluentd
+
+- name: make install ruby
+  sudo: yes
+  command: >
+    make install
+    chdir={{ item.download_dest_dir }}/{{ item.ruby_dir_with_version }}
+  with_items: fluentd
+  tags: fluentd
+
+- name: export ruby PATH
+  sudo: yes
+  lineinfile:
+    backup: no
+    dest: /root/.bash_profile
+    regexp: "^export PATH$"
+    line: "export PATH={{ item.ruby_install_prefix }}/bin:$PATH"
+  with_items: fluentd
+  tags: fluentd
+
 - name: install ntp, libcurl-devel
   sudo: yes
   yum: pkg={{ item }} state=installed
@@ -67,56 +120,55 @@
   ping:
   tags: fluentd
 
-# 
-# - name: download install script.
-#   sudo: yes
-#   get_url: >
-#       url={{ item.install_script_url }}
-#       dest={{ item.download_dest_dir }}
-#   with_items:
-#     fluentd
-#   tags: fluentd
-# 
-# - name: install fluentd.
-#   sudo: yes
-#   command:
-#     sh {{ item.download_dest_dir }}/{{ item.install_script }}
-#   with_items:
-#     fluentd
-#   tags: fluentd
-# 
-# - name: mkdir /var/lib/fluent
-#   sudo: yes
-#   file: >
-#     path={{ item.pos_file_dir }}
-#     state=directory
-#     owner=td-agent
-#     group=td-agent
-#     mode=0755
-#   with_items:
-#     fluentd
-#   tags: fluentd
-# 
-# - name: create pos_file.
-#   sudo: yes
-#   file: >
-#     path={{ item.pos_file_dir }}/{{ item.nginx_pos_file }}
-#     state=file
-#     owner=td-agent
-#     group=td-agent
-#   with_items:
-#     fluentd
-#   tags: fluentd
-# 
-# - name: put td-agent.conf.
-#   sudo: yes
-#   template: >
-#     src={{ item.conf_src }}
-#     dest={{ item.conf_dest }}
-#   with_items:
-#     fluentd
-#   tags: fluentd
-# 
+- name: download install script.
+  sudo: yes
+  get_url: >
+      url={{ item.install_script_url }}
+      dest={{ item.download_dest_dir }}
+  with_items:
+    fluentd
+  tags: fluentd
+
+- name: install td-agent.
+  sudo: yes
+  command:
+    sh {{ item.download_dest_dir }}/{{ item.install_script }}
+  with_items:
+    fluentd
+  tags: fluentd
+
+- name: mkdir /var/lib/fluent
+  sudo: yes
+  file: >
+    path={{ item.pos_file_dir }}
+    state=directory
+    owner=td-agent
+    group=td-agent
+    mode=0755
+  with_items:
+    fluentd
+  tags: fluentd
+
+- name: create pos_file.
+  sudo: yes
+  file: >
+    path={{ item.pos_file_dir }}/{{ item.nginx_pos_file }}
+    state=file
+    owner=td-agent
+    group=td-agent
+  with_items:
+    fluentd
+  tags: fluentd
+
+- name: put td-agent.conf.
+  sudo: yes
+  template: >
+    src={{ item.conf_src }}
+    dest={{ item.conf_dest }}
+  with_items:
+    fluentd
+  tags: fluentd
+
 # - name: install plugin config_expander
 #   sudo: yes
 # 
