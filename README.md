@@ -1,14 +1,16 @@
 # EFK
 
-- ElasticSearch
-- Fluentd
-- Kibana
-- ServerSpec
+- Fluentd(td-agent)
+- Kibana4
+- ElasticSearch 1.7.2
 
 ## node1
+踏み台
 192.168.33.11
 
 ## node2
+ElasticSearch,td-agent,Kibanaを動かす
+それぞれサーバーを分けたければinventoriesとか書き換える
 192.168.33.12
 
 ## First!
