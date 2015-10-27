@@ -1,59 +1,6 @@
 ---
 # file: roles/fluentd/tasks/main.yml
 # See: http://docs.fluentd.org/articles/install-by-rpm
-- name: download ruby
-  sudo: yes
-  get_url: >
-    url={{ item.ruby_source_url }}/{{ item.ruby_source_tarball }}
-    dest={{ item.download_dest_dir }}
-  with_items:
-    fluentd
-  tags: fluentd
-
-- name: unarchive ruby
-  sudo: yes
-  unarchive: >
-    src={{ item.download_dest_dir }}/{{ item.ruby_source_tarball }}
-    dest={{ item.download_dest_dir }}
-    creates=no
-    copy=no
-  with_items: fluentd
-  tags: fluentd
-
-- name: configure ruby
-  sudo: yes
-  command: >
-    ./configure --prefix={{ item.ruby_install_prefix }}
-    chdir={{ item.download_dest_dir }}/{{ item.ruby_dir_with_version }}
-  with_items: fluentd
-  tags: fluentd
-
-- name: make ruby
-  sudo: yes
-  command: >
-    make
-    chdir={{ item.download_dest_dir }}/{{ item.ruby_dir_with_version }}
-  with_items: fluentd
-  tags: fluentd
-
-- name: make install ruby
-  sudo: yes
-  command: >
-    make install
-    chdir={{ item.download_dest_dir }}/{{ item.ruby_dir_with_version }}
-  with_items: fluentd
-  tags: fluentd
-
-- name: export ruby PATH
-  sudo: yes
-  lineinfile:
-    backup: no
-    dest: /root/.bash_profile
-    regexp: "^export PATH$"
-    line: "export PATH={{ item.ruby_install_prefix }}/bin:$PATH"
-  with_items: fluentd
-  tags: fluentd
-
 - name: install ntp, libcurl-devel
   sudo: yes
   yum: pkg={{ item }} state=installed
@@ -169,16 +116,18 @@
     fluentd
   tags: fluentd
 
-# - name: install plugin config_expander
-#   sudo: yes
-# 
-# 
-# - name: chkconig -add td-agent
-#   sudo: yes
-#   command: chkconfig --add td-agent
-#   tags: fluentd
-# 
-# - name: restart td-agent
-#   sudo: yes
-#   service: name=td-agent state=restarted enabled=yes
-#   tags: fluentd
+- name: install plugin config_expander
+  sudo: yes
+  command:
+    /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-config-expander
+  tags: fluentd
+
+- name: chkconfig on
+  sudo: yes
+  command: chkconfig --add td-agent
+  tags: fluentd
+
+- name: restart td-agent
+  sudo: yes
+  service: name=td-agent state=restarted enabled=yes
+  tags: fluentd
