@@ -67,19 +67,34 @@
   ping:
   tags: fluentd
 
+- name: install script is exists?
+  sudo: yes
+  stat: path={{ item.download_dest_dir }}
+  with_items: fluentd
+  register: install_script_file
+  tags: fluentd
+
 - name: download install script.
   sudo: yes
   get_url: >
       url={{ item.install_script_url }}
       dest={{ item.download_dest_dir }}
+  when: install_script_file.md5 is not defined
   with_items:
     fluentd
+  tags: fluentd
+
+- name: td-agent is installed?
+  sudo: yes
+  stat: path=/etc/init.d/td-agent
+  register: td_agent_init_d_script
   tags: fluentd
 
 - name: install td-agent.
   sudo: yes
   command:
     sh {{ item.download_dest_dir }}/{{ item.install_script }}
+  when: td_agent_init_d_script.md5 is not defined
   with_items:
     fluentd
   tags: fluentd
@@ -92,17 +107,6 @@
     owner=td-agent
     group=td-agent
     mode=0755
-  with_items:
-    fluentd
-  tags: fluentd
-
-- name: create pos_file.
-  sudo: yes
-  file: >
-    path={{ item.pos_file_dir }}/{{ item.nginx_pos_file }}
-    state=file
-    owner=td-agent
-    group=td-agent
   with_items:
     fluentd
   tags: fluentd
@@ -120,6 +124,46 @@
   sudo: yes
   command:
     /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-config-expander
+  tags: fluentd
+
+- name: install plugin fluent-plugin-typecast
+  sudo: yes
+  command:
+    /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-typecast
+  tags: fluentd
+
+- name: install plugin fluent-plugin-elasticsearch
+  sudo: yes
+  command:
+    /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-elasticsearch
+  tags: fluentd
+
+- name: mkdir fluentd buffer to use log position file.
+  sudo: yes
+  file: >
+    path={{ item.pos_file_dir }}/{{ item.buffer_dir }}
+    state=directory
+    owner=td-agent
+    group=td-agent
+  with_items: fluentd
+  tags: fluentd
+
+- name: mkdir fluentd buffer directory(s).
+  sudo: yes
+  file: >
+    path={{ item.pos_file_dir }}/{{ item.buffer_dir }}/{{ item.pos_files.nginx }}
+    state=directory
+    owner=td-agent
+    group=td-agent
+  with_items: fluentd
+  tags: fluentd
+
+- name: sudo chmod -r /var/log/nginx/access.log
+  sudo: yes
+  file: >
+    mode=0755
+    path=/var/log/nginx/access.log
+  with_items: fluentd
   tags: fluentd
 
 - name: chkconfig on
